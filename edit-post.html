@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Post - MANS University Blog{% endblock %}
+
+{% block extra_css %}
+<!-- Using Quill editor instead of TinyMCE -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<section class="post-form-section">
+    <h2>Edit Post</h2>
+    
+    <form method="post" enctype="multipart/form-data" class="post-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="title">Post Title *</label>
+                <input type="text" id="title" name="title" required value="{{ post.title }}" maxlength="200">
+            </div>
+            
+            <div class="form-group">
+                <label for="author">Author *</label>
+                <input type="text" id="author" name="author" required value="{{ post.author }}" maxlength="100">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="category">Category *</label>
+                <select id="category" name="category" required>
+                    <option value="">Select a category</option>
+                    <option value="Announcements" {% if post.category == 'Announcements' %}selected{% endif %}>Announcements</option>
+                    <option value="Research" {% if post.category == 'Research' %}selected{% endif %}>Research</option>
+                    <option value="Student Life" {% if post.category == 'Student Life' %}selected{% endif %}>Student Life</option>
+                    <option value="Faculty" {% if post.category == 'Faculty' %}selected{% endif %}>Faculty</option>
+                    <option value="Innovation" {% if post.category == 'Innovation' %}selected{% endif %}>Innovation</option>
+                    <option value="Events" {% if post.category == 'Events' %}selected{% endif %}>Events</option>
+                    <option value="Academic" {% if post.category == 'Academic' %}selected{% endif %}>Academic</option>
+                    <option value="News" {% if post.category == 'News' %}selected{% endif %}>News</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="image">Featured Image</label>
+                <input type="file" id="image" name="image" accept="image/*">
+                {% if post.image %}
+                <div class="current-image">
+                    <small>Current image:</small>
+                    <img src="{{ url_for('uploaded_file', filename=post.image) }}" alt="Current image" style="max-width: 150px; margin-top: 5px;">
+                </div>
+                {% endif %}
+                <small class="form-help">Upload a new image to replace the current one (PNG, JPG, GIF, WebP)</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="content">Post Content *</label>
+            <div id="editor-container" style="height: 300px;"></div>
+            <textarea id="content" name="content" required style="display: none;">{{ post.content }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label class="checkbox-label">
+                <input type="checkbox" name="featured" {% if post.featured %}checked{% endif %}>
+                Mark as featured post
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Update Post</button>
+            <a href="{{ url_for('post_detail', post_id=post.id) }}" class="btn-secondary">Cancel</a>
+            <form method="post" action="{{ url_for('delete_post', post_id=post.id) }}" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this post? This action cannot be undone.')">
+                <button type="submit" class="btn-danger">Delete Post</button>
+            </form>
+        </div>
+    </form>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/post-editor.js') }}"></script>
+{% endblock %}

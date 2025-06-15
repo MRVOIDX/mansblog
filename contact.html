@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Contact - MANS University Blog{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+    <h2>Contact Us</h2>
+    <p>
+        We'd love to hear from you! Whether you have questions about our blog, want to contribute content, or need assistance with anything related to our platform, please don't hesitate to reach out.
+    </p>
+
+    <div class="contact-content">
+        <div class="contact-info">
+            <h3>Get in Touch</h3>
+            <div class="contact-details">
+                <p><strong>Email:</strong> blog@mans.edu.pl</p>
+                <p><strong>Phone:</strong> +48 22 456 7890</p>
+                <p><strong>Office Hours:</strong> Monday - Friday, 8:00 AM - 4:00 PM CET</p>
+                <p><strong>Address:</strong><br>
+                    MANS University<br>
+                    Digital Media Center<br>
+                    ul. Kawęczyńska 36<br>
+                    03-772 Warsaw, Poland
+                </p>
+            </div>
+        </div>
+
+        <div class="contact-form-container">
+            <h3>Send us a Message</h3>
+            <form method="post" class="contact-form">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="student-id">Student ID (if applicable):</label>
+                <input type="text" id="student-id" name="student-id" placeholder="Optional">
+
+                <label for="subject">Subject:</label>
+                <select id="subject" name="subject" required>
+                    <option value="">Select a subject</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="submission">Content Submission</option>
+                    <option value="technical">Technical Support</option>
+                    <option value="feedback">Feedback</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="6" required placeholder="Please provide details about your inquiry or message..."></textarea>
+
+                <label for="newsletter" class="checkbox-label">
+                    <input type="checkbox" id="newsletter" name="newsletter">
+                    Subscribe to our newsletter for updates
+                </label>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
